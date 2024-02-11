@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+
+  bot:
+    build: .
+    command: sh -c "python bot.py"
+    container_name: club-bot
+    volumes:
+      - .:/bot
