@@ -13,14 +13,22 @@ logging.basicConfig(level=logging.INFO)
 async def on_startup():
     await bot.set_my_commands(
         commands=[
-            BotCommand(command='/events', description='🤠 Мериприятия'),
-            BotCommand(command='/call', description='🕺  Как связаться'),
+            BotCommand(command='/events', description='🤠 Проекты'),
+            BotCommand(command='/call', description='🕺  Настройка Уведомлений'),
             BotCommand(command='/about', description='👒 О боте')
         ],
         scope=BotCommandScopeAllPrivateChats(),
         language_code='ru'
     )
-
+    await bot.set_my_commands(
+        commands=[
+            BotCommand(command='/events', description='🤠 Projects'),
+            BotCommand(command='/call', description='🕺 Notification Config'),
+            BotCommand(command='/about', description='👒 About')
+        ],
+        scope=BotCommandScopeAllPrivateChats(),
+        language_code='ru'
+    )
 
 dp = Dispatcher()
 
