@@ -3,7 +3,7 @@ from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
 
 from src.settings import bot
-from src.keyboards.inline.ik import events_ik, EventsCallbackData, events, InlineClubInfo
+from src.keyboards.inline.ik import events_ik, EventsCallbackData, events  #, InlineClubInfo
 
 router = Router()
 
