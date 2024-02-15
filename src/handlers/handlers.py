@@ -24,6 +24,6 @@ async def get_event_info(callback: CallbackQuery, callback_data: EventsCallbackD
         chat_id=callback.message.chat.id,
         photo=events.get(callback_data.event).get("photo"),
         caption=events.get(callback_data.event).get("description"),
-        reply_markup=InlineClubInfo(event=callback_data.event).create_keyboard()
+        # reply_markup=InlineClubInfo(event=callback_data.event).create_keyboard()
     )
 

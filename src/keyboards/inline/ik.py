@@ -24,14 +24,14 @@ events_ik = InlineKeyboardMarkup(
 )
 
 
-class InlineClubInfo:
-    def __init__(self, event):
-        self.event = event
-
-    def create_keyboard(self):
-        return InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text=f"Остановить уведомления ({events.get(self.event).get('name')})",
-                                  callback_data=f"stop_{self.event}")]
-        ])
+# class InlineClubInfo:
+#     def __init__(self, event):
+#         self.event = event
+#
+#     def create_keyboard(self):
+#         return InlineKeyboardMarkup(inline_keyboard=[
+#             [InlineKeyboardButton(text=f"Остановить уведомления ({events.get(self.event).get('name')})",
+#                                   callback_data=f"stop_{self.event}")]
+#         ])
 
 
