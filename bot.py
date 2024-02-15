@@ -27,7 +27,7 @@ async def on_startup():
             BotCommand(command='/about', description='👒 About')
         ],
         scope=BotCommandScopeAllPrivateChats(),
-        language_code='ru'
+        language_code='en'
     )
 
 dp = Dispatcher()
