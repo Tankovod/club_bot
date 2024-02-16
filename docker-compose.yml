@@ -4,7 +4,34 @@ services:
 
   bot:
     build: .
-    command: sh -c "python bot.py"
+#    command: sh -c "alembic revision --autogenerate && alembic upgrade head && python -m bot"
+    command: sh -c "python -m bot"
     container_name: club-bot
     volumes:
       - .:/bot
+    env_file:
+      - .env.bot
+    restart: always
+    depends_on:
+      - postgres
+
+  admin:
+    build: .
+    command: sh -c "python -m admin"
+    container_name: club-admin
+    ports:
+      - "8010:8000"
+    volumes:
+      - .:/bot
+    env_file:
+      - .env.bot
+    restart: always
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15-alpine3.18
+    container_name: club-db
+    env_file:
+      - .env.postgres
+    restart: always

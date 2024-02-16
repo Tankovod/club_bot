@@ -2,36 +2,65 @@ from typing import Literal
 
 from aiogram.filters.callback_data import CallbackData
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from sqlalchemy import select
+
+from src.database.models import Club, UserClub
 
 
 class EventsCallbackData(CallbackData, prefix='us'):
-    event: Literal["man", "talk"]
+    event: str
 
 
-events = {
-    "man": {"name": "Мужской клуб", "description": "Информация о клубе",
-            "photo": "https://sp.onliner.by/wp-content/uploads/2020/08/Untitled-19.png", "callback": "man"},
-    "talk": {"name": "Разговорный клуб", "description": "Информация о клубе",
-             "photo": "https://cdn-user30887.skyeng.ru/uploads/63a2ca2b70a3b279014270.jpg", "callback": "talk"}
-}
+class ActionCallbackData(CallbackData, prefix="ac"):
+    action: Literal["back", "cancel", "save"]
 
-events_ik = InlineKeyboardMarkup(
+
+class ClubIdCallbackData(CallbackData, prefix="fi"):
+    club_id: int
+
+
+async def create_club_ik() -> InlineKeyboardMarkup:
+    async with Club.session() as session:
+        clubs = await session.scalars(select(Club))
+
+        return InlineKeyboardMarkup(
+            inline_keyboard=[
+                [InlineKeyboardButton(text=club.name,
+                                      callback_data=EventsCallbackData(event=club.tag).pack())]
+                for club in clubs
+            ]
+        )
+
+
+back_button_clubs = InlineKeyboardMarkup(
     inline_keyboard=[
-        [InlineKeyboardButton(text=event.get("name"),
-                              callback_data=EventsCallbackData(event=event.get("callback")).pack())]
-        for event in events.values()
+        [InlineKeyboardButton(text=" <= НАЗАД ", callback_data=ActionCallbackData(action="back").pack())]
     ]
 )
 
 
-# class InlineClubInfo:
-#     def __init__(self, event):
-#         self.event = event
-#
-#     def create_keyboard(self):
-#         return InlineKeyboardMarkup(inline_keyboard=[
-#             [InlineKeyboardButton(text=f"Остановить уведомления ({events.get(self.event).get('name')})",
-#                                   callback_data=f"stop_{self.event}")]
-#         ])
+async def create_user_clubs_ikb(all_clubs: dict[int: str], user_clubs_ids: list[int]) -> InlineKeyboardMarkup:
+    ikb = []
+    for club in all_clubs.items():
+        if club[0] in user_clubs_ids:
+            ikb.append(
+                InlineKeyboardButton(
+                    callback_data=ClubIdCallbackData(club_id=club[0]).pack(),
+                    text="✅ " + club[1]
+                )
+            )
+            continue
+        ikb.append(
+            InlineKeyboardButton(
+                callback_data=ClubIdCallbackData(club_id=club[0]).pack(),
+                text=club[1]
+            )
+        )
 
-
+    return InlineKeyboardMarkup(
+        inline_keyboard=[ikb,
+                         [InlineKeyboardButton(text="ОТМЕНА", callback_data=ActionCallbackData(action="cancel").pack()),
+                          InlineKeyboardButton(text="СОХРАНИТЬ",
+                                               callback_data=ActionCallbackData(action="save").pack())],
+                         ]
+    )

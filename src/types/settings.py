@@ -1,9 +1,10 @@
 from pydantic_settings import BaseSettings
-from pydantic import SecretStr
+from pydantic import SecretStr, PostgresDsn
 
 
 class Settings(BaseSettings):
-    BOT_TOKEN: SecretStr = "6287767778:AAH7s-UvZxIMEmE7F4F6DAsxF-y7iQeJF18"
+    BOT_TOKEN: SecretStr
+    DATABASE_URL: PostgresDsn
 
 
 settings = Settings()
