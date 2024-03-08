@@ -73,7 +73,7 @@ class UserClub(Base):
     club = relationship(argument="Club", back_populates="users", lazy="selectin")
 
     def __str__(self):
-        return str(self.user) + " " + self.club
+        return str(self.user) + " " + str(self.club)
 
     def __repr__(self):
         return str(self)
