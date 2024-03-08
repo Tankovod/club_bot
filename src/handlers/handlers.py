@@ -187,6 +187,6 @@ async def make_newsletter(message: Message, state: FSMContext):
 @router.message(Command("about"))
 async def handle_about(message: Message):
     await message.answer(
-        text="  Данный бот помогает найти подходящие мероприятия и классно провести время.\n    По организационным "
+        text="\tДанный бот помогает найти подходящие мероприятия и классно провести время.\nПо организационным "
              "вопросам обращаться @ZDES_BY"
     )
