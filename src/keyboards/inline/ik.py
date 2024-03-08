@@ -32,7 +32,7 @@ async def create_club_ik() -> InlineKeyboardMarkup:
             inline_keyboard=[
                 [InlineKeyboardButton(text=club.name,
                                       callback_data=EventsCallbackData(event=club.tag).pack())]
-                for club in clubs.unique()
+                for club in clubs
             ]
         )
 
@@ -45,7 +45,7 @@ async def create_club_newsletter_ik() -> InlineKeyboardMarkup:
             inline_keyboard=[
                 [InlineKeyboardButton(text=club.name,
                                       callback_data=ClubNewsletterCallbackData(club_id=club.id).pack())]
-                for club in clubs.unique()
+                for club in clubs
             ]
         )
 
