@@ -48,7 +48,7 @@ async def first_event_info(message: Message):
         await session.refresh(new_user)
 
         clubs_ids = await session.scalars(select(Club.id))
-        user_clubs = [UserClub(club_id=club_id, user_id=message.chat.id) for club_id in clubs_ids.unique()]
+        user_clubs = [UserClub(club_id=club_id, user_id=message.chat.id) for club_id in clubs_ids]
 
         session.add_all(user_clubs)
         await session.commit()
@@ -94,7 +94,7 @@ async def user_club_config(message: Message, state: FSMContext):
     await bot.delete_message(chat_id=message.chat.id, message_id=message.message_id)
     async with UserClub.session() as session:
         all_clubs = await session.scalars(select(Club))
-        all_clubs = {club.id: club.name for club in all_clubs.unique()}
+        all_clubs = {club.id: club.name for club in all_clubs}
 
         user_clubs_ids = await session.scalars(select(UserClub.club_id)
                                                .filter(UserClub.user_id == message.chat.id))
@@ -175,7 +175,7 @@ async def make_newsletter(message: Message, state: FSMContext):
         users_ids = await session.scalars(select(UserClub.user_id).filter(UserClub.club_id == data.get("club_id")))
 
         await state.clear()
-        for user_id in users_ids.unique():
+        for user_id in users_ids:
             try:
                 await bot.send_message(chat_id=user_id, text=message.text)
             except TelegramBadRequest:
