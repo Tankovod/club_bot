@@ -41,8 +41,7 @@ async def first_event_info(message: Message):
 
         try:
             await session.commit()
-        except IntegrityError as ex:
-            print(ex)
+        except IntegrityError:
             await message.answer(text=f"Рады видеть Вас снова, {message.chat.first_name}")
             return None
 

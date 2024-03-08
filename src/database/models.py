@@ -14,7 +14,7 @@ class User(Base):
     role_id = Column(ForeignKey(column="role.id", ondelete="RESTRICT"), nullable=False, unique=False)
     date_sign_up = Column(TIMESTAMP, nullable=False, unique=False)
     is_male = Column(BOOLEAN, nullable=True, unique=False, default=None)
-    note = Column(VARCHAR(128), nullable=False, unique=False)
+    note = Column(VARCHAR(128), nullable=True, unique=False)
 
     user_role = relationship(argument="Role", back_populates="users", lazy="selectin")
     # clubs = relationship(argument="UserClub", back_populates="user", lazy="selectin")
