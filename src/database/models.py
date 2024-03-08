@@ -66,7 +66,7 @@ class Club(Base):
 class UserClub(Base):
     __tablename__ = "user_club"
     id = Column(BIGINT, primary_key=True)
-    user_id = Column(BIGINT, ForeignKey(column="users.tg_id", ondelete="DELETE"), nullable=False, unique=False)
+    user_id = Column(BIGINT, ForeignKey(column="users.tg_id", ondelete="CASCADE"), nullable=False, unique=False)
     club_id = Column(INT, ForeignKey(column="club.id", ondelete="CASCADE"), nullable=False, unique=False)
 
     user = relationship(argument="User", back_populates="clubs", lazy="joined")
