@@ -16,8 +16,8 @@ class User(Base):
     is_male = Column(BOOLEAN, nullable=True, unique=False, default=None)
     note = Column(VARCHAR(128), nullable=True, unique=False)
 
-    user_role = relationship(argument="Role", back_populates="users", lazy="selectin")
-    clubs = relationship(argument="UserClub", back_populates="user", lazy="selectin")
+    user_role = relationship(argument="Role", back_populates="users", lazy="joined")
+    clubs = relationship(argument="UserClub", back_populates="user", lazy="joined")
 
     def __str__(self):
         if self.first_name and self.last_name:
@@ -54,7 +54,7 @@ class Club(Base):
     photo = Column(VARCHAR(512), nullable=True, unique=False)
     description = Column(TEXT, nullable=False, unique=False)
 
-    users = relationship(argument="UserClub", back_populates="club", lazy="selectin")
+    users = relationship(argument="UserClub", back_populates="club", lazy="joined")
 
     def __str__(self):
         return self.tag
@@ -69,8 +69,8 @@ class UserClub(Base):
     user_id = Column(BIGINT, ForeignKey(column="users.tg_id", ondelete="CASCADE"), nullable=False, unique=False)
     club_id = Column(INT, ForeignKey(column="club.id", ondelete="CASCADE"), nullable=False, unique=False)
 
-    user = relationship(argument="User", back_populates="clubs", lazy="selectin")
-    club = relationship(argument="Club", back_populates="users", lazy="selectin")
+    user = relationship(argument="User", back_populates="clubs", lazy="joined")
+    club = relationship(argument="Club", back_populates="users", lazy="joined")
 
     def __str__(self):
         return str(self.user) + " " + str(self.club)
