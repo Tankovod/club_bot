@@ -1,4 +1,4 @@
-from sqlalchemy import Column, BIGINT, VARCHAR, TIMESTAMP, ForeignKey, SMALLINT, TEXT
+from sqlalchemy import Column, BIGINT, VARCHAR, TIMESTAMP, ForeignKey, SMALLINT, TEXT, BOOLEAN
 from sqlalchemy.orm import relationship
 
 from .base import Base
@@ -11,10 +11,12 @@ class User(Base):
     first_name = Column(VARCHAR(128), nullable=True, unique=False)
     last_name = Column(VARCHAR(128), nullable=True, unique=False)
     phone = Column(VARCHAR(16), nullable=True, unique=True)
-    role_id = Column(ForeignKey("role.id", ondelete="RESTRICT"), nullable=False, unique=False)
+    role_id = Column(ForeignKey(column="role.id", ondelete="RESTRICT"), nullable=False, unique=False)
     date_sign_up = Column(TIMESTAMP, nullable=False, unique=False)
+    is_male = Column(BOOLEAN, nullable=True, unique=False, default=None)
+    note = Column(VARCHAR(128), nullable=False, unique=False)
 
-    role = relationship(argument="Role", back_populates="users", lazy="selectin")
+    user_role = relationship(argument="Role", back_populates="users", lazy="selectin")
     # clubs = relationship(argument="UserClub", back_populates="user", lazy="selectin")
 
     def __str__(self):
@@ -36,7 +38,7 @@ class Role(Base):
     id = Column(SMALLINT, primary_key=True)
     name = Column(VARCHAR(16), nullable=False, unique=True)
 
-    users = relationship(argument="User", back_populates="role")
+    users = relationship(argument="User", back_populates="user_role")
 
     def __str__(self):
         return self.name
@@ -64,7 +66,7 @@ class Club(Base):
 class UserClub(Base):
     __tablename__ = "user_club"
     id = Column(BIGINT, primary_key=True)
-    user_id = Column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False, unique=False)
+    user_id = Column(ForeignKey("users.tg_id", ondelete="CASCADE"), nullable=False, unique=False)
     club_id = Column(ForeignKey("club.id", ondelete="CASCADE"), nullable=False, unique=False)
 
     user = relationship(argument="User")  # , back_populates="clubs", lazy="selectin")

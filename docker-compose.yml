@@ -17,6 +17,7 @@ services:
 
   admin:
     build: .
+#    command: sh -c "alembic revision --autogenerate && alembic upgrade head && python -m admin"
     command: sh -c "python -m admin"
     container_name: club-admin
     ports:
@@ -35,3 +36,17 @@ services:
     env_file:
       - .env.postgres
     restart: always
+
+  dj:
+    build: .
+    command: sh -c "cd dj && python manage.py runserver 0.0.0.0:8000 && python manage.py makemigrations && django-admin inspectdb > admin_app/models.py "
+    container_name: dj-admin
+    ports:
+      - "8030:8000"
+    volumes:
+      - .:/bot
+    env_file:
+      - .env.bot
+    restart: always
+    depends_on:
+      - postgres

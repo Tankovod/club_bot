@@ -1,6 +1,5 @@
 from sqladmin import ModelView
-from fastapi import Request
-from sqladmin.authentication import AuthenticationBackend
+
 from src.database.models import User, Club, Role, UserClub
 
 
@@ -8,6 +7,8 @@ class UserAdmin(ModelView, model=User):
     column_list = ["username", "first_name", "last_name", "date_sign_up"]
     name = "Пользователь"
     name_plural = "Пользователи"
+    # can_delete = False
+    # can_edit = False
 
 
 class ClubAdmin(ModelView, model=Club):
