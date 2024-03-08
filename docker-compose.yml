@@ -16,8 +16,8 @@ services:
 
   admin:
     build: .
-    command: sh -c "alembic revision --autogenerate && alembic upgrade head && python -m admin"
-#    command: sh -c "python -m admin"
+#    command: sh -c "alembic revision --autogenerate && alembic upgrade head && python -m admin"
+    command: sh -c "python -m admin"
     container_name: club-admin
     ports:
       - "8050:8000"
