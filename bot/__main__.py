@@ -19,27 +19,6 @@ async def on_startup():
             BotCommand(command='/about', description='👒 О боте')
         ],
         scope=BotCommandScopeAllPrivateChats(),
-        language_code='ru'
-    )
-    await bot.set_my_commands(
-        commands=[
-            BotCommand(command='/events', description='🤠 Проекты'),
-            BotCommand(command='/edit', description='🕺  Настройка Уведомлений'),
-            BotCommand(command='/start', description='💫 Рестарт бота'),
-            BotCommand(command='/about', description='👒 О боте')
-        ],
-        scope=BotCommandScopeAllPrivateChats(),
-        language_code='by'
-    )
-    await bot.set_my_commands(
-        commands=[
-            BotCommand(command='/events', description='🤠 Projects'),
-            BotCommand(command='/edit', description='🕺 Notification Config'),
-            BotCommand(command='/start', description='💫 Bot Restart'),
-            BotCommand(command='/about', description='👒 About')
-        ],
-        scope=BotCommandScopeAllPrivateChats(),
-        language_code='en'
     )
 
 dp = Dispatcher()
