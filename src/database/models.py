@@ -38,7 +38,7 @@ class Role(Base):
     id = Column(SMALLINT, primary_key=True)
     name = Column(VARCHAR(16), nullable=False, unique=True)
 
-    users = relationship(argument="User", back_populates="user_role")
+    # users = relationship(argument="User", back_populates="user_role")
 
     def __str__(self):
         return self.name
