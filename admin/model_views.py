@@ -26,6 +26,5 @@ class RoleAdmin(ModelView, model=Role):
 
 
 class UserClubAdmin(ModelView, model=UserClub):
-    column_list = ["user", "club"]
     name = "Клуб пользователя"
     name_plural = "Клубы пользователей"
