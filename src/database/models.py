@@ -16,7 +16,7 @@ class User(Base):
     is_male = Column(BOOLEAN, nullable=True, unique=False, default=None)
     note = Column(VARCHAR(128), nullable=True, unique=False)
 
-    # user_role = relationship(argument="Role", back_populates="users", lazy="selectin")
+    user_role = relationship(argument="Role", lazy="selectin")
     # clubs = relationship(argument="UserClub", back_populates="user", lazy="selectin")
 
     def __str__(self):
